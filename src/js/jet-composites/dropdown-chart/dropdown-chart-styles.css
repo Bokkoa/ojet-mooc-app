@@ -1,0 +1,22 @@
+/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   dropdown-chart .dropdown-chart-value-text {
+   color: var(--dropdown-chart-value-text-color);
+   display: inline-block;
+	 }
+*/
+
+dropdown-chart:not(.oj-complete){
+  visibility: hidden;
+}
+
+dropdown-chart{
+	min-height: 50px;
+	width: 50px;
+}
+
+dropdown-chart[hidden]
+{
+  display: none;
+}
