@@ -6,76 +6,90 @@
 */
 'use strict';
 define(
-    ['knockout',
-     'ojL10n!./resources/nls/dropdown-chart-strings',
-     'ojs/ojcontext',
-     'ojs/ojarraydataprovider',
-     'ojs/ojknockout',
-     'ojs/ojchart',
-     'ojs/ojselectsingle',
-    ], function (ko, componentStrings, Context, ArrayDataProvider) {
-    
+  ['knockout',
+    'ojL10n!./resources/nls/dropdown-chart-strings',
+    'ojs/ojcontext',
+    'ojs/ojarraydataprovider',
+    'ojs/ojknockout',
+    'ojs/ojchart',
+    'ojs/ojselectsingle',
+  ], function (ko, componentStrings, Context, ArrayDataProvider) {
+
     function ExampleComponentModel(context) {
-        var self = this;
-        
-        //At the start of your viewModel constructor
-        var busyContext = Context.getContext(context.element).getBusyContext();
-        var options = {"description": "Web Component Startup - Waiting for data"};
-        self.busyResolve = busyContext.addBusyState(options);
+      var self = this;
 
-        self.composite = context.element;
+      //At the start of your viewModel constructor
+      var busyContext = Context.getContext(context.element).getBusyContext();
+      var options = { "description": "Web Component Startup - Waiting for data" };
+      self.busyResolve = busyContext.addBusyState(options);
 
-        self.selectVal = ko.observable(context.properties.chartType ?? '');
+      self.composite = context.element;
 
-        var browsers = [
-          { value: 'pie', label: 'Pie'},
-          { value: 'bar', label: 'Bar'},
-        ];
+      self.selectVal = ko.observable(context.properties.chartType ?? '');
 
-        self.browsersDP = new ArrayDataProvider(browsers, { keyAttributes: 'value' });
-        self.stackValue = ko.observable('off');
-        self.orientationValue = ko.observable('vertical');
+      var browsers = [
+        { value: 'pie', label: 'Pie' },
+        { value: 'bar', label: 'Bar' },
+      ];
 
-        self.dataProvider = new ArrayDataProvider([
-          {
-            "id": 1,
-            "series": "GTX 4000",
-            "group": "TI",
-            "value": 40
-          },
+      self.browsersDP = new ArrayDataProvider(browsers, { keyAttributes: 'value' });
+      self.stackValue = ko.observable('off');
+      self.orientationValue = ko.observable('vertical');
 
-          {
-            "id": 2,
-            "series": "GTX 3000",
-            "group": "Strix",
-            "value": 10
-          },
+      self.selectVal.subscribe(() => {
+        const chartTypeChangedEvent = new CustomEvent('chartTypeChanged', {
+          bubbles: true,
+          detail: {
+            value: 'pie',
+            previousValue: 'bar',
+            updatedFrom: 'dropdown chart viewmodel'
+          }
+        });
 
-          {
-            "id": 3,
-            "series": "GTX 2000",
-            "group": "Super",
-            "value": 99
-          },
-          {
-            "id": 4,
-            "series": "GTX 5000",
-            "group": "IDK",
-            "value": 199
-          },
-        ], { keyAttributes: 'id' })
-        
-        self.properties = context.properties;
-        self.res = componentStrings['dropdown-chart'];
-        // Example for parsing context properties
-        if (context.properties.name) {
+        self.composite.dispatchEvent(chartTypeChangedEvent);
 
-        }
+      })
 
-        //Once all startup and async activities have finished, relocate if there are any async activities
-        self.busyResolve();
+      self.dataProvider = new ArrayDataProvider([
+        {
+          "id": 1,
+          "series": "GTX 4000",
+          "group": "TI",
+          "value": 40
+        },
+
+        {
+          "id": 2,
+          "series": "GTX 3000",
+          "group": "Strix",
+          "value": 10
+        },
+
+        {
+          "id": 3,
+          "series": "GTX 2000",
+          "group": "Super",
+          "value": 99
+        },
+        {
+          "id": 4,
+          "series": "GTX 5000",
+          "group": "IDK",
+          "value": 199
+        },
+      ], { keyAttributes: 'id' })
+
+      self.properties = context.properties;
+      self.res = componentStrings['dropdown-chart'];
+      // Example for parsing context properties
+      if (context.properties.name) {
+
+      }
+
+      //Once all startup and async activities have finished, relocate if there are any async activities
+      self.busyResolve();
     };
-    
+
     //Lifecycle methods - uncomment and implement if necessary 
     //ExampleComponentModel.prototype.activated = function(context){
     //};
@@ -93,4 +107,4 @@ define(
     //};
 
     return ExampleComponentModel;
-});
+  });

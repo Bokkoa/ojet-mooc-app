@@ -10,12 +10,30 @@
       "type": "string"
     }
   },
-  "methods": {
-
-  }, 
+  "methods": {},
   "events": {
-
-  }, 
+    "chartTypeChanged": {
+      "description": "Handling the type chart change",
+      "bubbles": true,
+      "detail": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "The new chart type"
+          },
+          "previousValue": {
+            "type": "string",
+            "description": "The previous chart type"
+          },
+          "updatedFrom": {
+            "type": "string",
+            "description": "Indicates the source of the update (user/programmatic)"
+          }
+        }
+      }
+    }
+  },
   "slots": {
     "toobar": {
       "description": "Toolbar for working with chart."

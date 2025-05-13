@@ -14,7 +14,9 @@
 
 
     <div class="oj-flex-item">
-      <dropdown-chart chart-type="bar">
+      <dropdown-chart
+          on-chart-type-changed="[[chartTypeChangeHandler]]" 
+          chart-type="bar">
         <span slot="toolbar">
           <oj-button>Hello world</oj-button>
         </span>
